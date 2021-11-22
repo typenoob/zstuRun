@@ -41,22 +41,25 @@ if __name__ == '__main__':
         dic['endtime'] = str(now)
         dic['usetime'] = str(int(dic['endtime'])-int(dic['begintime']))
         return location
-
-    with open('./config.json', 'r', encoding='utf8')as fp:
-        config = json.load(fp)
-    dic = {}
-    dic['begintime'] = str(int(time.time()))  # starttime
-    dic['uid'] = r'd6220f10-d208-43cd-a53e-2aa53685323fb88f31121e714f3da11c9e5c6bb2c87f1622117480$a98bcd3166022036e4ed7d2585d84e2c'
-    dic['schoolno'] = '10338'
-    dic['distance'] = str(config['target'])
-    dic['studentno'] = '2019329600124'
-    dic['atttype'] = '3'
-    dic['eventno'] = '801'
-    dic['location'] = getLocation()
-    url = 'http://10.11.246.182:8029/DragonFlyServ/Api/webserver/uploadRunData'
-    headers = {"Content-Type": "application/x-www-form-urlencoded", "Connection": "Keep-Alive", "Charset": "UTF-8",
-               "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 7.1.2; TAS-AN00 Build/TAS-AN00)",
-               "Host": "10.11.246.182:8029", "Accept-Encoding": "gzip"}
-    data = gzip.compress(str(dic).encode('utf-8'))
-    requ = requests.post(url=url, headers=headers, data=data)
-    print(requ.text)
+    while(1):
+        with open('./config.json', 'r', encoding='utf8')as fp:
+            config = json.load(fp)
+        day = int(input())
+        if day == -1:
+            break
+        dic = {}
+        dic['begintime'] = str(int(time.time())-day*86400)  # starttime
+        dic['uid'] = r'd6220f10-d208-43cd-a53e-2aa53685323fb88f31121e714f3da11c9e5c6bb2c87f1622117480$a98bcd3166022036e4ed7d2585d84e2c'
+        dic['schoolno'] = '10338'
+        dic['distance'] = str(config['target'])
+        dic['studentno'] = '2019329600124'
+        dic['atttype'] = '3'
+        dic['eventno'] = '801'
+        dic['location'] = getLocation()
+        url = 'http://10.11.246.182:8029/DragonFlyServ/Api/webserver/uploadRunData'
+        headers = {"Content-Type": "application/x-www-form-urlencoded", "Connection": "Keep-Alive", "Charset": "UTF-8",
+                   "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 7.1.2; TAS-AN00 Build/TAS-AN00)",
+                   "Host": "10.11.246.182:8029", "Accept-Encoding": "gzip"}
+        data = gzip.compress(str(dic).encode('utf-8'))
+        requ = requests.post(url=url, headers=headers, data=data)
+        print(requ.text)
