@@ -45,7 +45,7 @@ if __name__ == '__main__':
     with open('./config.json', 'r', encoding='utf8')as fp:
         config = json.load(fp)
     dic = {}
-    dic['begintime'] = str(int(time.time())) #starttime
+    dic['begintime'] = str(int(time.time()))  # starttime
     dic['uid'] = r'd6220f10-d208-43cd-a53e-2aa53685323fb88f31121e714f3da11c9e5c6bb2c87f1622117480$a98bcd3166022036e4ed7d2585d84e2c'
     dic['schoolno'] = '10338'
     dic['distance'] = str(config['target'])
